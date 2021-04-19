@@ -1,0 +1,205 @@
+ALGORITHM PB1_SOLUTION1
+
+VAR sum, i, j, k, l : INTEGER := 0;
+VAR tab_1, tab_2 : ARRAY_OF INTEGER[];
+
+BEGIN
+
+    Write("Write a first set of INTEGER ARRAY");
+    Read(tab_1);
+
+    Write("Write a second set of INTEGER ARRAY");
+    Read(tab_2);
+
+    FOR i FROM 0 TO tab_1.length-1 STEP 1 DO
+        sum := sum + tab_1[i]
+
+        FOR j FROM 0 TO tab_2.length-1 STEP 1 DO
+            IF (tab_1[i] = tab_2[j]) THEN
+                sum := sum - tab_1[i]
+            END_IF
+        END_FOR
+
+    END_FOR
+
+    FOR k FROM 0 TO tab_2.length-1 STEP 1 DO
+        sum := sum + tab_2[k]
+
+        FOR l FROM 0 TO tab_1.length-1 STEP 1 DO
+            IF (tab_2[k] = tab_1[l]) THEN
+                sum := sum - tab_2[k]
+            END_IF
+        END_FOR
+
+    END_FOR
+
+    write("La somme est de " + sum);
+
+END
+
+
+ALGORITHM PB1_SOLUTION2
+
+VAR h_tab : HASH_TABLE<INTEGER,INTEGER>;
+VAR tab_1, tab_2 : ARRAY_OF INTEGER[];
+VAR sum, i, j, count, l : INTEGER := 0;
+VAR min, max : INTEGER := 0;
+
+BEGIN
+
+    Write("Write a first set of INTEGER ARRAY");
+    Read(tab_1);
+
+    Write("Write a second set of INTEGER ARRAY");
+    Read(tab_2);
+
+    FOR i FROM 0 TO tab_1.length-1 STEP 1 DO
+        h_tab.insert(tab_1[i], 1);
+
+        IF (i=0) THEN
+            min := tab_1[i];
+            max := tab_1[i];
+        ELSE
+            
+            IF (tab_1[i] < min) THEN
+                min := tab_1[i];
+            END_IF
+
+            IF (tab_1[i] > max) THEN
+                max := tab_1[i];
+            END_IF
+            
+        END_IF
+
+    END_FOR
+
+    FOR j FROM 0 TO tab_2.length-1 STEP 1 DO
+
+        IF (h_tab.lookup(tab_2[j]) = FALSE) THEN
+            h_tab.insert(tab_2[j], 1);
+
+            IF (tab_2[j] < min) THEN
+                min := tab_2[j];
+            END_IF
+
+            IF (tab_2[j] > max) THEN
+                max := tab_2[j];
+            END_IF
+
+        ELSE
+            count := h_tab.get(tab_2[j]) + 1;
+            h_tab.insert(tab_2[j], count);
+        END_IF
+
+    END_FOR
+
+    FOR l FROM min TO max STEP 1 DO
+
+        IF (h_tab.get(l) = 1) THEN
+            sum := sum + l;
+        END_IF
+
+    END_FOR
+
+    write("La somme est de " + sum);
+
+END
+
+
+ALGORITHM PB2_SOLUTION1
+
+VAR sum, i, j : INTEGER := 0;
+VAR tab_1, tab_2 : ARRAY_OF INTEGER[];
+
+BEGIN
+
+    Write("Write a first set of INTEGER ARRAY");
+    Read(tab_1);
+
+    Write("Write a second set of INTEGER ARRAY");
+    Read(tab_2);
+
+    FOR i FROM 0 TO tab_1.length-1 STEP 1 DO
+
+        FOR j FROM 0 TO tab_2.length-1 STEP 1 DO
+            IF (tab_1[i] = tab_2[j]) THEN
+                sum := sum + tab_1[i] + tab_2[j]
+            END_IF
+        END_FOR
+
+    END_FOR
+
+    write("La somme est de " + sum);
+
+END
+
+
+ALGORITHM PB2_SOLUTION2
+
+VAR h_tab : HASH_TABLE<INTEGER,INTEGER>;
+VAR tab_1, tab_2 : ARRAY_OF INTEGER[];
+VAR sum, i, j, count, l : INTEGER := 0;
+VAR min, max : INTEGER := 0;
+
+BEGIN
+
+    Write("Write a first set of INTEGER ARRAY");
+    Read(tab_1);
+
+    Write("Write a second set of INTEGER ARRAY");
+    Read(tab_2);
+
+    FOR i FROM 0 TO tab_1.length-1 STEP 1 DO
+        h_tab.insert(tab_1[i], 1);
+
+        IF (i=0) THEN
+            min := tab_1[i];
+            max := tab_1[i];
+        ELSE
+            
+            IF (tab_1[i] < min) THEN
+                min := tab_1[i];
+            END_IF
+
+            IF (tab_1[i] > max) THEN
+                max := tab_1[i];
+            END_IF
+            
+        END_IF
+
+    END_FOR
+
+    FOR j FROM 0 TO tab_2.length-1 STEP 1 DO
+
+        IF (h_tab.lookup(tab_2[j]) = FALSE) THEN
+            h_tab.insert(tab_2[j], 1);
+
+            IF (tab_2[j] < min) THEN
+                min := tab_2[j];
+            END_IF
+
+            IF (tab_2[j] > max) THEN
+                max := tab_2[j];
+            END_IF
+
+        ELSE
+            count := h_tab.get(tab_2[j]) + 1;
+            h_tab.insert(tab_2[j], count);
+        END_IF
+
+    END_FOR
+
+    FOR l FROM min TO max STEP 1 DO
+
+        IF (h_tab.get(l) = 2) THEN
+            sum := l * 2;
+        END_IF
+
+    END_FOR
+
+    write("La somme est de " + sum);
+
+END
+
+
+
